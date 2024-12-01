@@ -1,13 +1,28 @@
 import { TodoCard } from "./TodoCard";
 
-export function TodoList() {
+export function TodoList(props) {
+
+    const { todos, selectedTab } = props
+
+    const filterTodosList = selectedTab === 'All' ? 
+        todos :
+        selectedTab === 'Completed' ?
+            todos.filter(val => val.complete) :
+            todos.filter(val => !val.complete)
+
     return (
-        <div>
-            <TodoCard />
-            <TodoCard />
-            <TodoCard />
-            <TodoCard />
-            <TodoCard />
-        </div>
+        <>
+            {filterTodosList.map((todo, todoIndex)=>{
+                return(
+                    <TodoCard 
+                        key={todoIndex}
+                        todoIndex={todoIndex}
+                        {...props} 
+                        todo={todo}/>
+                    //{...props must be last and takes all the props the parent is receiving}
+                )
+
+            })}
+        </>
     )
 }
