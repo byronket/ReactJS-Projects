@@ -1,6 +1,10 @@
 import { coffeeOptions } from "../utils"
+import { useState } from 'react'
 
 export default function CoffeeForm(){
+    const [selectedCoffee, setSelectedCoffee] = useState(null)
+    const [showCoffeeTypes, setShowCoffeeTypes] = useState(false)
+
     return(
         <>
             <div className="section-header">
@@ -11,18 +15,26 @@ export default function CoffeeForm(){
             <div className="coffee-grid">
                 {coffeeOptions.slice(0, 5).map((option, optionIndex) => {
                     return(
-                        <button className="button-card" key={optionIndex}>
+                        <button onClick={() => {
+                            setSelectedCoffee(option.name)
+                            setShowCoffeeTypes(false)
+                        }} className={"button-card " + (option.name == selectedCoffee ? 'coffee-button-selected' : ' ')} key={optionIndex}>
                             <h4>{option.name}</h4>
                             <p>{option.caffeine} mg</p>
                         </button>
                     )
                 })}
-                <button className="button-card">
+                <button onClick={() => {
+                    setShowCoffeeTypes(true)
+                    setSelectedCoffee(null)
+                }} className={"button-card " + (showCoffeeTypes ? 'coffee-button-selected' : ' ')}>
                     <h4>Other</h4>
                     <p>N/A</p>
                 </button>
             </div>
-            <select id="coffee-list" name="coffee-list">
+            {showCoffeeTypes && (
+                
+                <select id="coffee-list" name="coffee-list">
                 <option value={null}>Select type</option>
                 {coffeeOptions.map((option, optionIndex) => {
                     return(
@@ -33,6 +45,8 @@ export default function CoffeeForm(){
 
                 })}
             </select>
+        
+        )}
             <h4>Add the cost ($)</h4>
             <input className="w-full" type="number" placeholder="4.50" />
             <h4>Time since consumtion</h4>
@@ -47,7 +61,18 @@ export default function CoffeeForm(){
                         })} 
                     </select>
                 </div>
+                <div>
+                    <h6>Mins</h6>
+                    <select id="mins-select">
+                    {[0, 5, 10, 15, 30, 45].map((min, minIndex) => {
+                            return (
+                                <option key={minIndex} value={min}>{min}</option>
+                            )
+                        })} 
+                    </select>
+                </div>
             </div>
+            <button>Add the Entry</button>
         </>
     )
 }
