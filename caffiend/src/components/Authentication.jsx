@@ -1,10 +1,12 @@
 import {useState} from 'react'
 import { useAuth } from '../context/AuthContext'
-export default function Authentication(){
+export default function Authentication(props){
+    const { handleCloseModal } = props
     const [isRegistration, setIsRegistration] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isAuthenticating, setIsAuthenticating] = useState(false)
+    const [error, setError] = useState(null)
 
     const {signup, login} = useAuth()
 
@@ -14,6 +16,7 @@ export default function Authentication(){
 
         try {
             setIsAuthenticating(true)
+            setError(null)
 
             if (isRegistration){
                 //register a user
@@ -22,9 +25,11 @@ export default function Authentication(){
                 await login(email, password)
                 //login a user
             }
+            handleCloseModal()
 
         } catch (err) {
             console.log(err.message)
+            setError(err.message)
         } finally {
             setIsAuthenticating(false)
         }
@@ -37,6 +42,9 @@ export default function Authentication(){
         <>
             <h2 className="sign-up-text">{isRegistration ? 'Sign Up' : 'Login'}</h2>
             <p>{isRegistration ? 'Create an account' : 'Sign in to your account'}</p>
+            {error && (
+                <p>❌ {error}</p>
+            )}
             <input value={email} onChange={(e) => {setEmail(e.target.value)}} placeholder="Email" />
             <input value={password} onChange={(e) => {setPassword(e.target.value)}} placeholder="********" type="password" />
             <button onClick={handleAuthenticate}><p>{isAuthenticating ? 'Authenticating...' : 'Submit'}</p></button>

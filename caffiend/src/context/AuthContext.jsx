@@ -26,7 +26,7 @@ export function AuthProvider(props){
     }
 
     function logout() {
-        setUser(null)
+        setGlobalUser(null)
         setGlobalData(null)
         signOut(auth)
     }
@@ -39,6 +39,8 @@ export function AuthProvider(props){
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             // If there's no user, empty the user state and return from this listener.
             console.log('CURRENT USER: ', user)
+            setGlobalUser(user)
+
             if (!user) {
                 console.log('No active user')
                  return 
@@ -49,16 +51,20 @@ export function AuthProvider(props){
 
             try {
                 setIsLoading(true)
+                console.log('pre')
                 //first we create a reference for the document (labelled json object), and then we get the doc + snapshot it to see if anything is there.
-                const docRef = doc(db, 'user', user.uid)
-                const docSnap = await getDoc(docRef)
+                const docRef = doc(db, 'users', user.uid)
 
-                let fireBaseData = {}
+                //error in line below
+                const docSnap = await getDoc(docRef)
+                console.log('post')
+
+                let firebaseData = {}
                 if (docSnap.exists()) {
-                    console.log('Found User Data')
                     firebaseData = docSnap.data()
+                    console.log('Found User Data', firebaseData)
                 }
-                setGlobalData(fireBaseData)
+                setGlobalData(firebaseData)
 
             } catch (err) {
                 console.log(err.message)

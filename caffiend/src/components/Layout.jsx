@@ -10,16 +10,24 @@ export default function Layout(props){
 
     const [showModal, setShowModal] = useState(false)
 
+    const { globalUser, logout } = useAuth()
+
     const header = (
         <header>
             <div>
                 <h1 className="text-gradient">CAFFIEND</h1>
                 <p>For Coffee Inthusiests</p>
             </div>
-            <button onClick={() => {setShowModal(true)}}>
-                <p>Sign up for free</p>
-                <i className="fa-solid fa-mug-hot"></i>
-            </button>
+            {globalUser ? (
+                <button onClick={logout}>
+                    <p>Logout</p>
+                </button>
+            ) : (
+                <button onClick={() => {setShowModal(true)}}>
+                    <p>Sign up for free</p>
+                    <i className="fa-solid fa-mug-hot"></i>
+                </button>
+            )}
         </header>
     )
 
@@ -29,10 +37,14 @@ export default function Layout(props){
         </footer>
     )
 
+    function handleCloseModal(){
+        setShowModal(false)
+    }
+
     return(
         <>
-            {showModal && (<Modal handleCloseModal={() => {setShowModal(false)}}>
-                <Authentication />
+            {showModal && (<Modal handleCloseModal={handleCloseModal}>
+                <Authentication handleCloseModal={handleCloseModal}/>
             </Modal>)}
             {header}
             <main>

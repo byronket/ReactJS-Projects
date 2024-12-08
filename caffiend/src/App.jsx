@@ -3,11 +3,15 @@ import Stats from "./components/Stats"
 import History from "./components/History"
 import CoffeeForm from "./components/CoffeeForm"
 import Hero from "./components/Hero"
+import { useAuth } from "./context/AuthContext"
+import { coffeeConsumptionHistory } from "./utils"
 
 
 function App() {
 
-  const isAuthenticated = false
+  const { globalUser, isLoading, globalData } = useAuth()
+  const isAuthenticated = globalUser
+  const isData = globalData && !!Object.keys(globalData || {}).length
 
   const authenticatedContent = (
     <>
@@ -20,7 +24,10 @@ function App() {
     <Layout>
       <Hero />
       <CoffeeForm isAuthenticated={isAuthenticated}/>
-      {isAuthenticated && (authenticatedContent)}
+      {(isLoading && isAuthenticated) && (
+        <p>Loading data...</p>
+      )}
+      {(isAuthenticated && isData) && (authenticatedContent)}
 
     </Layout>
   )
