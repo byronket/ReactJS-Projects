@@ -38,7 +38,7 @@ export default function Authentication(props){
 
     }
 
-    return(
+    return (
         <>
             <h2 className="sign-up-text">{isRegistration ? 'Sign Up' : 'Login'}</h2>
             <p>{isRegistration ? 'Create an account' : 'Sign in to your account'}</p>
