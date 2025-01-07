@@ -1,3 +1,4 @@
+/* Layout component*/
 import { useState } from "react"
 import Authentication from "./Authentication"
 import Modal from "./Modal"
@@ -33,7 +34,7 @@ export default function Layout(props){
 
     const footer = (
         <footer>
-            <p><span className="text-gradient">Habit Visualizer </span>was made by <a href="https://github.com/byronket" target="_blank">Byron Keturakis</a><br /> using the <a href="https://www.fantacss.smoljames.com" target="_blank">FantaCSS</a></p>
+            <p><span className="text-gradient">Habit Visualizer </span>was made by <a href="https://github.com/byronket" target="_blank">Byron Keturakis</a><br /></p>
         </footer>
     )
 
