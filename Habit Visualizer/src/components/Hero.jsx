@@ -14,7 +14,7 @@ export default function Hero(){
             <div className="card indo-card">
                 <div>
                     <i className="fa-solid fa-circle-info"></i>
-                    <h3>Why did I built this app?</h3>
+                    <h3>Why did I build this app?</h3>
                 </div>
                 <h5>To track daily habits</h5>
                 <p>Not every habit has clear effects that you can feel everyday.  Sometimes it's hard to see the progress you have made unless you take a step back.
