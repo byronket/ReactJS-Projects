@@ -3,7 +3,7 @@
 export default function Hero(){
     return(
         <>
-            <h1>Visualize Small Steps that Lead to Big <abbr title="Customize your goals">Achievemnts</abbr>!</h1>
+            <h1>Visualize Small Steps that Lead to Big <abbr title="Customize your goals">Achievements</abbr>!</h1>
             <div className="benefits-list">
                 <h3 className="font-bolder">Try 
                 <span className="text-gradient"> Habit Visualizer</span> and start ...</h3>
